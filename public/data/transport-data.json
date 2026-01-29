@@ -1,0 +1,33 @@
+[
+  { "date": "2024-01-01", "line": "Line A", "passengers": 11800 },
+  { "date": "2024-01-02", "line": "Line A", "passengers": 13250 },
+  { "date": "2024-01-03", "line": "Line A", "passengers": 12900 },
+  { "date": "2024-01-04", "line": "Line A", "passengers": 13420 },
+  { "date": "2024-01-05", "line": "Line A", "passengers": 13800 },
+  { "date": "2024-01-06", "line": "Line A", "passengers": 10200 },
+  { "date": "2024-01-07", "line": "Line A", "passengers": 9800 },
+
+  { "date": "2024-01-01", "line": "Line B", "passengers": 8600 },
+  { "date": "2024-01-02", "line": "Line B", "passengers": 9100 },
+  { "date": "2024-01-03", "line": "Line B", "passengers": 8950 },
+  { "date": "2024-01-04", "line": "Line B", "passengers": 9300 },
+  { "date": "2024-01-05", "line": "Line B", "passengers": 9600 },
+  { "date": "2024-01-06", "line": "Line B", "passengers": 7400 },
+  { "date": "2024-01-07", "line": "Line B", "passengers": 7100 },
+
+  { "date": "2024-01-01", "line": "Line C", "passengers": 6200 },
+  { "date": "2024-01-02", "line": "Line C", "passengers": 6800 },
+  { "date": "2024-01-03", "line": "Line C", "passengers": 6650 },
+  { "date": "2024-01-04", "line": "Line C", "passengers": 7000 },
+  { "date": "2024-01-05", "line": "Line C", "passengers": 7200 },
+  { "date": "2024-01-06", "line": "Line C", "passengers": 5400 },
+  { "date": "2024-01-07", "line": "Line C", "passengers": 5100 },
+
+  { "date": "2024-01-01", "line": "Line D", "passengers": 4300 },
+  { "date": "2024-01-02", "line": "Line D", "passengers": 4800 },
+  { "date": "2024-01-03", "line": "Line D", "passengers": 4700 },
+  { "date": "2024-01-04", "line": "Line D", "passengers": 4950 },
+  { "date": "2024-01-05", "line": "Line D", "passengers": 5200 },
+  { "date": "2024-01-06", "line": "Line D", "passengers": 3900 },
+  { "date": "2024-01-07", "line": "Line D", "passengers": 3700 }
+]

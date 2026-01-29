@@ -1,0 +1,11 @@
+<h2>Dashboard</h2>
+
+<p>isLoading: {{ isLoading }}</p>
+
+<p *ngIf="isLoading()">Loading...</p>
+
+<pre *ngIf="!isLoading()">
+{{ records() | json }}
+</pre>
+
+<p>Total passengers: {{ totalPassengers() }}</p>

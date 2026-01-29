@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Dashboard } from './features/dashboard/dashboard';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [Dashboard],
+  template: '<app-dashboard />',
 })
 export class App {
   protected readonly title = signal('transport-data-dashboard');
