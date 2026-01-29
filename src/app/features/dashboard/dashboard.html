@@ -1,11 +1,58 @@
-<h2>Dashboard</h2>
+<div class="p-6 space-y-4">
+  <h1 class="text-2xl font-bold">Urban Transport Dashboard</h1>
 
-<p>isLoading: {{ isLoading }}</p>
+  @if (isLoading()) {
+    <p class="text-gray-500">Loading data...</p>
+  } @else {
+    <!-- KPI -->
+    <div class="flex flex-row place-content-between">
+      <div class="flex gap-4 items-center bg-white rounded-xl shadow p-4 w-1/4">
+        <label class="text-lg font-medium">Selected Date:</label>
+        <select
+          class="border rounded px-3 py-2 text-sm flex grow"
+          (change)="selectedDate.set($any($event.target).value)"
+        >
+          @for (date of availableDates(); track date) {
+            <option [value]="date">
+              {{ date }}
+            </option>
+          }
+        </select>
+      </div>
+      <div class="flex flex-row gap-4">
+        <div class="bg-white rounded-xl shadow p-4 w-fit">
+          <p class="text-sm text-gray-700">Daily Passengers</p>
+          <p class="text-3xl font-semibold">
+            {{ dateTotalPassengers() | number }}
+          </p>
+        </div>
 
-<p *ngIf="isLoading()">Loading...</p>
+        <div class="bg-white rounded-xl shadow p-4 w-fit">
+          <p class="text-sm text-gray-700">Total Passengers</p>
+          <p class="text-3xl font-semibold">
+            {{ totalPassengers() | number }}
+          </p>
+        </div>
+      </div>
+    </div>
 
-<pre *ngIf="!isLoading()">
-{{ records() | json }}
-</pre>
-
-<p>Total passengers: {{ totalPassengers() }}</p>
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-100 text-left">
+          <tr>
+            <th class="p-3">Line</th>
+            <th class="p-3">Passengers</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of filteredData(); track row.line) {
+            <tr class="border-t">
+              <td class="p-3 font-medium">{{ row.line }}</td>
+              <td class="p-3">{{ row.passengers | number }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

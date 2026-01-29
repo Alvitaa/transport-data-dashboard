@@ -14,6 +14,8 @@ export class Dashboard {
   records = signal<TransportRecord[]>([]);
   isLoading = signal(true);
 
+  selectedDate = signal<string | null>(null);
+
   constructor(private transportService: TransportDataService) {
     this.loadData();
   }
@@ -23,6 +25,7 @@ export class Dashboard {
       next: (res) => {
         this.records.set(res);
         this.isLoading.set(false);
+        this.selectedDate.set(res[0]?.date ?? null);
       },
       error: (err) => {
         console.error('Error: ', err);
@@ -31,7 +34,21 @@ export class Dashboard {
     });
   }
 
+  availableDates = computed(() =>
+    [...new Set(this.records().map(d => d.date))]
+  );
+
+  filteredData = computed(() =>
+    this.selectedDate()
+      ? this.records().filter(d => d.date === this.selectedDate())
+      : []
+  );
+
+  dateTotalPassengers = computed(() =>
+    this.filteredData().reduce((sum,line) => sum + line.passengers, 0)
+  )
+
   totalPassengers = computed(() =>
-    this.records().reduce((sum, line) => sum + line.passengers, 0),
+    this.records().reduce((sum, line) => sum + line.passengers, 0)
   );
 }
