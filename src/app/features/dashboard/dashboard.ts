@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { TransportDataService } from '../../core/services/transport-data.service';
 import { TransportRecord } from '../../core/models/transport-record.model';
 
+type SortField = 'line' | 'passengers';
+type SortDirection = 'asc' | 'desc';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -15,6 +18,9 @@ export class Dashboard {
   isLoading = signal(true);
 
   selectedDate = signal<string | null>(null);
+
+  sortField = signal<SortField>('line');
+  sortDirection = signal<SortDirection>('asc');
 
   constructor(private transportService: TransportDataService) {
     this.loadData();
@@ -34,21 +40,37 @@ export class Dashboard {
     });
   }
 
-  availableDates = computed(() =>
-    [...new Set(this.records().map(d => d.date))]
-  );
+  sortedData = computed(() => {
+    const field = this.sortField();
+    const direction = this.sortDirection();
+
+    return [...this.filteredData()].sort((a, b) => {
+      if (field === 'line') {
+        return direction === 'asc' ? a.line.localeCompare(b.line) : b.line.localeCompare(a.line);
+      }
+
+      return direction === 'asc' ? a.passengers - b.passengers : b.passengers - a.passengers;
+    });
+  });
+
+  availableDates = computed(() => [...new Set(this.records().map((d) => d.date))]);
 
   filteredData = computed(() =>
-    this.selectedDate()
-      ? this.records().filter(d => d.date === this.selectedDate())
-      : []
+    this.selectedDate() ? this.records().filter((d) => d.date === this.selectedDate()) : [],
   );
 
   dateTotalPassengers = computed(() =>
-    this.filteredData().reduce((sum,line) => sum + line.passengers, 0)
-  )
-
-  totalPassengers = computed(() =>
-    this.records().reduce((sum, line) => sum + line.passengers, 0)
+    this.filteredData().reduce((sum, line) => sum + line.passengers, 0),
   );
+
+  totalPassengers = computed(() => this.records().reduce((sum, line) => sum + line.passengers, 0));
+
+  toggleSort(field: SortField) {
+    if (this.sortField() === field) {
+      this.sortDirection.set(this.sortDirection() === 'asc' ? 'desc' : 'asc');
+    } else {
+      this.sortField.set(field);
+      this.sortDirection.set('asc');
+    }
+  }
 }
