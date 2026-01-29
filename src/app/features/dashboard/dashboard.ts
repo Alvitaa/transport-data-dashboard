@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TransportDataService } from '../../core/services/transport-data.service';
 import { TransportRecord } from '../../core/models/transport-record.model';
 
-type SortField = 'line' | 'passengers';
+type SortField = 'line' | 'passengers' | 'time';
 type SortDirection = 'asc' | 'desc';
 
 @Component({
@@ -73,4 +73,13 @@ export class Dashboard {
       this.sortDirection.set('asc');
     }
   }
+
+  averageInterval = computed(() => {
+    const data = this.filteredData();
+    if (!data.length) return 0;
+
+    const total = data.reduce((sum, d) => sum + d.avgIntervalMinutes, 0);
+
+    return +(total / data.length).toFixed(2);
+  });
 }
