@@ -2,14 +2,21 @@ import { Component, computed, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransportDataService } from '../../core/services/transport-data.service';
 import { TransportRecord } from '../../core/models/transport-record.model';
+import { ChartData } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
-type SortField = 'line' | 'passengers' | 'time';
+type SortField = 'line' | 'passengers' | 'time' | 'delta' | 'deltaPercent';
 type SortDirection = 'asc' | 'desc';
+
+type TransportRowWithDelta = TransportRecord & {
+  deltaPassengers: number | null;
+  deltaPercent: number | null;
+};
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BaseChartDirective],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
@@ -47,21 +54,65 @@ export class Dashboard {
     return [...this.filteredData()].sort((a, b) => {
       if (field === 'line') {
         return direction === 'asc' ? a.line.localeCompare(b.line) : b.line.localeCompare(a.line);
+      } else if (field === 'passengers') {
+        return direction === 'asc' ? a.passengers - b.passengers : b.passengers - a.passengers;
+/*       } else if (field === 'delta') {
+        return direction === 'asc' ? a.deltaPassengers - b.deltaPassengers : b.deltaPassengers - a.deltaPassengers;
+      } else if (field === 'deltaPercent') {
+        return direction === 'asc' ? a.deltaPercent - b.deltaPercent : b.deltaPercent - a.deltaPercent; */
+      } else {
+        return direction === 'asc' ? a.avgIntervalMinutes - b.avgIntervalMinutes : b.avgIntervalMinutes - a.avgIntervalMinutes;
       }
-
-      return direction === 'asc' ? a.passengers - b.passengers : b.passengers - a.passengers;
     });
   });
 
   availableDates = computed(() => [...new Set(this.records().map((d) => d.date))]);
 
   filteredData = computed(() =>
-    this.selectedDate() ? this.records().filter((d) => d.date === this.selectedDate()) : [],
+    this.selectedDate() ? this.tableDataWithDelta().filter((d) => d.date === this.selectedDate()) : [],
   );
+
+  tableDataWithDelta = computed<TransportRowWithDelta[]>(() => {
+    const data = [...this.records()];
+    data.sort((a, b) => {
+      if (a.line !== b.line) {
+        return a.line.localeCompare(b.line);
+      }
+      return a.date.localeCompare(b.date);
+    });
+
+    const result: TransportRowWithDelta[] = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const current = data[i];
+      const previous = data[i - 1];
+
+      let deltaPassengers: number | null = null;
+      let deltaPercent: number | null = null;
+
+      if (previous && previous.line === current.line) {
+        deltaPassengers = current.passengers - previous.passengers;
+        deltaPercent =
+          previous.passengers > 0 ? (deltaPassengers / previous.passengers) * 100 : null;
+      }
+
+      result.push({
+        ...current,
+        deltaPassengers,
+        deltaPercent,
+      });
+    }
+
+    console.log(result)
+
+    return result;
+  });
 
   dateTotalPassengers = computed(() =>
     this.filteredData().reduce((sum, line) => sum + line.passengers, 0),
   );
+
+  dayType = computed(() => this.filteredData().at(0)?.dayType)
 
   totalPassengers = computed(() => this.records().reduce((sum, line) => sum + line.passengers, 0));
 
@@ -81,5 +132,29 @@ export class Dashboard {
     const total = data.reduce((sum, d) => sum + d.avgIntervalMinutes, 0);
 
     return +(total / data.length).toFixed(2);
+  });
+
+  lineChartData = computed<ChartData<'line'>>(() => {
+    const data = this.records();
+    if (!data.length) return { labels: [], datasets: [] };
+
+    const dates = Array.from(new Set(data.map((d) => d.date))).sort();
+    const lines = Array.from(new Set(data.map((d) => d.line)));
+
+    const datasets = lines.map((line, index) => {
+      return {
+        label: line,
+        data: dates.map((date) => {
+          const record = data.find((d) => d.line === line && d.date.startsWith(date));
+          return record ? record.passengers : 0;
+        }),
+        tension: 0.3,
+      };
+    });
+
+    return {
+      labels: dates,
+      datasets,
+    };
   });
 }
