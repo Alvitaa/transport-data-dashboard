@@ -29,6 +29,8 @@ export class Dashboard {
   sortField = signal<SortField>('line');
   sortDirection = signal<SortDirection>('asc');
 
+  selectedLine = signal<string>('Line A');
+
   constructor(private transportService: TransportDataService) {
     this.loadData();
   }
@@ -56,12 +58,14 @@ export class Dashboard {
         return direction === 'asc' ? a.line.localeCompare(b.line) : b.line.localeCompare(a.line);
       } else if (field === 'passengers') {
         return direction === 'asc' ? a.passengers - b.passengers : b.passengers - a.passengers;
-/*       } else if (field === 'delta') {
+        /*       } else if (field === 'delta') {
         return direction === 'asc' ? a.deltaPassengers - b.deltaPassengers : b.deltaPassengers - a.deltaPassengers;
       } else if (field === 'deltaPercent') {
         return direction === 'asc' ? a.deltaPercent - b.deltaPercent : b.deltaPercent - a.deltaPercent; */
       } else {
-        return direction === 'asc' ? a.avgIntervalMinutes - b.avgIntervalMinutes : b.avgIntervalMinutes - a.avgIntervalMinutes;
+        return direction === 'asc'
+          ? a.avgIntervalMinutes - b.avgIntervalMinutes
+          : b.avgIntervalMinutes - a.avgIntervalMinutes;
       }
     });
   });
@@ -69,7 +73,9 @@ export class Dashboard {
   availableDates = computed(() => [...new Set(this.records().map((d) => d.date))]);
 
   filteredData = computed(() =>
-    this.selectedDate() ? this.tableDataWithDelta().filter((d) => d.date === this.selectedDate()) : [],
+    this.selectedDate()
+      ? this.tableDataWithDelta().filter((d) => d.date === this.selectedDate())
+      : [],
   );
 
   tableDataWithDelta = computed<TransportRowWithDelta[]>(() => {
@@ -103,7 +109,7 @@ export class Dashboard {
       });
     }
 
-    console.log(result)
+    console.log(result);
 
     return result;
   });
@@ -112,7 +118,9 @@ export class Dashboard {
     this.filteredData().reduce((sum, line) => sum + line.passengers, 0),
   );
 
-  dayType = computed(() => this.filteredData().at(0)?.dayType)
+  dayType = computed(() => this.filteredData().at(0)?.dayType);
+
+  lines = computed(() => Array.from(new Set(this.records().map((d) => d.line))));
 
   totalPassengers = computed(() => this.records().reduce((sum, line) => sum + line.passengers, 0));
 
@@ -157,4 +165,41 @@ export class Dashboard {
       datasets,
     };
   });
+
+  barChartData = computed<ChartData<'bar'>>(() => {
+    const data = this.records();
+    const line = this.selectedLine();
+
+    const filtered = data
+      .filter((d) => d.line === line)
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    return {
+      labels: filtered.map((d) => d.date),
+      datasets: [
+        {
+          label: 'Actual',
+          data: filtered.map((d) => d.passengers),
+        },
+        {
+          label: 'Expected',
+          data: filtered.map((d) => d.expectedPassengers),
+        },
+      ],
+    };
+  });
+
+  barChartOptions = {
+    responsive: true,
+    scales: {
+      x: {
+        stacked: false,
+      },
+      y: {
+        ticks: {
+          callback: (value: any) => Number(value).toLocaleString(),
+        },
+      },
+    },
+  };
 }
