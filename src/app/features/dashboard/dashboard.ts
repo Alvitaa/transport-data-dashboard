@@ -166,16 +166,34 @@ export class Dashboard {
     };
   });
 
-  barChartData = computed<ChartData<'bar'>>(() => {
-    const data = this.records();
-    const line = this.selectedLine();
+  lineChartOptions = {
+    responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          maxTicksLimit: 5,
+          callback: (value: any, index: number) => {
+            const labels = this.lineChartData().labels as string[];
+            const date = labels[index];
+            return date.slice(5); // MM-DD
+          },
+        },
+      },
+      y: {
+        ticks: {
+          callback: (value: any) => Number(value).toLocaleString(),
+        },
+      },
+    },
+  };
 
-    const filtered = data
-      .filter((d) => d.line === line)
-      .sort((a, b) => a.date.localeCompare(b.date));
+  barChartData = computed<ChartData<'bar'>>(() => {
+    const data = this.filteredData();
+
+    const filtered = data.sort((a, b) => a.date.localeCompare(b.date));
 
     return {
-      labels: filtered.map((d) => d.date),
+      labels: filtered.map((d) => d.line),
       datasets: [
         {
           label: 'Actual',

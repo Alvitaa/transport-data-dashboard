@@ -1,5 +1,5 @@
 <h1 class="text-4xl font-black bg-green-400 p-6">URBAN TRANSPORT DASHBOARD</h1>
-<div class="px-6 py-2 space-y-6 bg-gray-50">
+<div class="px-6 pt-2 pb-6 space-y-6 bg-gray-50">
   @if (isLoading()) {
     <p class="text-gray-500">Loading data...</p>
   } @else {
@@ -115,22 +115,12 @@
     <div class="bg-white rounded-xl shadow-md border-1 border-gray-100 p-6 flex-1 min-w-0">
       <h2 class="text-lg font-semibold mb-4">Passenger Volume Over Time</h2>
 
-      <canvas baseChart [data]="lineChartData()" [type]="'line'"> </canvas>
+      <canvas baseChart [data]="lineChartData()" [type]="'line'" [options]="lineChartOptions"> </canvas>
     </div>
     <div class="bg-white rounded-xl shadow-md border-1 border-gray-100 p-6 flex-1 min-w-0">
       <div class="flex justify-between mb-4">
         <h2 class="text-lg font-semibold">Expected vs Actual Demand</h2>
-        <select
-          class="border rounded px-2 py-1 text-sm"
-          [value]="selectedLine()"
-          (change)="selectedLine.set($any($event.target).value)"
-        >
-          @for (line of lines(); track line) {
-            <option [value]="line">{{ line }}</option>
-          }
-        </select>
       </div>
-
       <canvas baseChart [type]="'bar'" [data]="barChartData()" [options]="barChartOptions">
       </canvas>
     </div>
