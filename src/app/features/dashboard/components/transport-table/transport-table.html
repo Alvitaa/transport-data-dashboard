@@ -1,63 +1,61 @@
-    <div class="bg-white rounded-xl shadow-md overflow-hidden border-1 border-gray-100">
-      <table class="w-full text-sm">
-        <thead class="bg-gray-100 text-left">
-          <tr>
-            <th class="p-3 cursor-pointer select-none w-1/9" (click)="toggleSort('line')">
-              Line
-              <span class="ml-1 text-s text-gray-800">
-                @if (sortField() === 'line') {
-                  {{ sortDirection() === 'asc' ? '↑' : '↓' }}
-                }
-              </span>
-            </th>
-            <th class="p-3 cursor-pointer select-none w-2/9" (click)="toggleSort('passengers')">
-              Passengers
-              <span class="ml-1 text-s text-gray-800">
-                @if (sortField() === 'passengers') {
-                  {{ sortDirection() === 'asc' ? '↑' : '↓' }}
-                }
-              </span>
-            </th>
-            <th class="p-3 cursor-pointer select-none w-2/9" (click)="toggleSort('delta')">
-              Δ of Passengers
-              <span class="ml-1 text-s text-gray-800">
-                @if (sortField() === 'delta') {
-                  {{ sortDirection() === 'asc' ? '↑' : '↓' }}
-                }
-              </span>
-            </th>
-            <th class="p-3 cursor-pointer select-none w-2/9" (click)="toggleSort('deltaPercent')">
-              Δ% of passengers
-              <span class="ml-1 text-s text-gray-800">
-                @if (sortField() === 'deltaPercent') {
-                  {{ sortDirection() === 'asc' ? '↑' : '↓' }}
-                }
-              </span>
-            </th>
-            <th class="p-3 cursor-pointer select-none w-1/3" (click)="toggleSort('time')">
-              Average Time of Arrival per Line
-              <span class="ml-1 text-s text-gray-800">
-                @if (sortField() === 'time') {
-                  {{ sortDirection() === 'asc' ? '↑' : '↓' }}
-                }
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of sortedData(); track row.line) {
-            <tr class="border-t">
-              <td class="p-3 font-medium w-1/9">{{ row.line }}</td>
-              <td class="p-3 w-2/9">{{ row.passengers | number }}</td>
-              <td class="p-3 w-2/9">
-                {{ row.deltaPassengers != null ? (row.deltaPassengers | number) : '-' }}
-              </td>
-              <td class="p-3 w-2/9">
-                {{ row.deltaPercent != null ? (row.deltaPercent | number: '1.0-2') + '%' : '-' }}
-              </td>
-              <td class="p-3 w-2/9">{{ row.avgIntervalMinutes | number }}</td>
-            </tr>
+<table class="w-full text-sm">
+  <thead class="bg-gray-100 text-left">
+    <tr>
+      <th class="p-3 cursor-pointer select-none w-1/9" (click)="toggleSort('line')">
+        Line
+        <span class="ml-1 text-s text-gray-800">
+          @if (sortField() === 'line') {
+            {{ sortDirection() === 'asc' ? '↑' : '↓' }}
           }
-        </tbody>
-      </table>
-    </div>
+        </span>
+      </th>
+      <th class="p-3 cursor-pointer select-none w-2/9" (click)="toggleSort('passengers')">
+        Passengers
+        <span class="ml-1 text-s text-gray-800">
+          @if (sortField() === 'passengers') {
+            {{ sortDirection() === 'asc' ? '↑' : '↓' }}
+          }
+        </span>
+      </th>
+      <th class="p-3 cursor-pointer select-none w-2/9" (click)="toggleSort('delta')">
+        Δ of Passengers
+        <span class="ml-1 text-s text-gray-800">
+          @if (sortField() === 'delta') {
+            {{ sortDirection() === 'asc' ? '↑' : '↓' }}
+          }
+        </span>
+      </th>
+      <th class="p-3 cursor-pointer select-none w-2/9" (click)="toggleSort('deltaPercent')">
+        Δ% of passengers
+        <span class="ml-1 text-s text-gray-800">
+          @if (sortField() === 'deltaPercent') {
+            {{ sortDirection() === 'asc' ? '↑' : '↓' }}
+          }
+        </span>
+      </th>
+      <th class="p-3 cursor-pointer select-none w-1/3" (click)="toggleSort('time')">
+        Average Time of Arrival per Line
+        <span class="ml-1 text-s text-gray-800">
+          @if (sortField() === 'time') {
+            {{ sortDirection() === 'asc' ? '↑' : '↓' }}
+          }
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of sortedData(); track row.line) {
+      <tr class="border-t">
+        <td class="p-3 font-medium w-1/9">{{ row.line }}</td>
+        <td class="p-3 w-2/9">{{ row.passengers | number }}</td>
+        <td class="p-3 w-2/9">
+          {{ row.deltaPassengers != null ? (row.deltaPassengers | number) : '-' }}
+        </td>
+        <td class="p-3 w-2/9">
+          {{ row.deltaPercent != null ? (row.deltaPercent | number: '1.0-2') + '%' : '-' }}
+        </td>
+        <td class="p-3 w-2/9">{{ row.avgIntervalMinutes | number }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

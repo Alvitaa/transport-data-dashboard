@@ -5,11 +5,12 @@ import { TransportRecord } from '../../core/models/transport-record.model';
 import { ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { TransportTable } from './components/transport-table/transport-table';
+import { PassangersLineChart } from './components/passangers-line-chart/passangers-line-chart';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective, TransportTable],
+  imports: [CommonModule, BaseChartDirective, TransportTable,PassangersLineChart],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
@@ -18,8 +19,6 @@ export class Dashboard {
   isLoading = signal(true);
 
   selectedDate = signal<string | null>(null);
-
-  selectedLine = signal<string>('Line A');
 
   constructor(private transportService: TransportDataService) {
     this.loadData();
@@ -102,51 +101,6 @@ export class Dashboard {
 
     return +(total / data.length).toFixed(2);
   });
-
-  lineChartData = computed<ChartData<'line'>>(() => {
-    const data = this.records();
-    if (!data.length) return { labels: [], datasets: [] };
-
-    const dates = Array.from(new Set(data.map((d) => d.date))).sort();
-    const lines = Array.from(new Set(data.map((d) => d.line)));
-
-    const datasets = lines.map((line, index) => {
-      return {
-        label: line,
-        data: dates.map((date) => {
-          const record = data.find((d) => d.line === line && d.date.startsWith(date));
-          return record ? record.passengers : 0;
-        }),
-        tension: 0.3,
-      };
-    });
-
-    return {
-      labels: dates,
-      datasets,
-    };
-  });
-
-  lineChartOptions = {
-    responsive: true,
-    scales: {
-      x: {
-        ticks: {
-          maxTicksLimit: 5,
-          callback: (value: any, index: number) => {
-            const labels = this.lineChartData().labels as string[];
-            const date = labels[index];
-            return date.slice(5);
-          },
-        },
-      },
-      y: {
-        ticks: {
-          callback: (value: any) => Number(value).toLocaleString(),
-        },
-      },
-    },
-  };
 
   barChartData = computed<ChartData<'bar'>>(() => {
     const data = this.filteredData();
