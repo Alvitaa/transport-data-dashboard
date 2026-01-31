@@ -2,15 +2,14 @@ import { Component, computed, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransportDataService } from '../../core/services/transport-data.service';
 import { TransportRecord } from '../../core/models/transport-record.model';
-import { ChartData } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
 import { TransportTable } from './components/transport-table/transport-table';
 import { PassangersLineChart } from './components/passangers-line-chart/passangers-line-chart';
+import { DemandBarChart } from './components/demand-bar-chart/demand-bar-chart';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective, TransportTable,PassangersLineChart],
+  imports: [CommonModule, TransportTable,PassangersLineChart, DemandBarChart],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
@@ -101,38 +100,4 @@ export class Dashboard {
 
     return +(total / data.length).toFixed(2);
   });
-
-  barChartData = computed<ChartData<'bar'>>(() => {
-    const data = this.filteredData();
-
-    const filtered = data.sort((a, b) => a.date.localeCompare(b.date));
-
-    return {
-      labels: filtered.map((d) => d.line),
-      datasets: [
-        {
-          label: 'Actual',
-          data: filtered.map((d) => d.passengers),
-        },
-        {
-          label: 'Expected',
-          data: filtered.map((d) => d.expectedPassengers),
-        },
-      ],
-    };
-  });
-
-  barChartOptions = {
-    responsive: true,
-    scales: {
-      x: {
-        stacked: false,
-      },
-      y: {
-        ticks: {
-          callback: (value: any) => Number(value).toLocaleString(),
-        },
-      },
-    },
-  };
 }
