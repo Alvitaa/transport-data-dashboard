@@ -25,20 +25,41 @@ export class TransportTable {
       if (field === 'line') {
         return direction === 'asc' ? a.line.localeCompare(b.line) : b.line.localeCompare(a.line);
       }
-      
+
       if (field === 'passengers') {
         return direction === 'asc' ? a.passengers - b.passengers : b.passengers - a.passengers;
-        /*       } else if (field === 'delta') {
-        return direction === 'asc' ? a.deltaPassengers - b.deltaPassengers : b.deltaPassengers - a.deltaPassengers;
-      } else if (field === 'deltaPercent') {
-        return direction === 'asc' ? a.deltaPercent - b.deltaPercent : b.deltaPercent - a.deltaPercent; */
-      } else {
-        return direction === 'asc'
-          ? a.avgIntervalMinutes - b.avgIntervalMinutes
-          : b.avgIntervalMinutes - a.avgIntervalMinutes;
       }
+
+      if (field === 'delta') {
+        return this.compareNullableNumbers(a.deltaPassengers, b.deltaPassengers, direction);
+      }
+
+      if (field === 'deltaPercent') {
+        return this.compareNullableNumbers(a.deltaPercent, b.deltaPercent, direction);
+      }
+      return direction === 'asc'
+        ? a.avgIntervalMinutes - b.avgIntervalMinutes
+        : b.avgIntervalMinutes - a.avgIntervalMinutes;
     });
   });
+
+  compareNullableNumbers(
+    a: number | null | undefined,
+    b: number | null | undefined,
+    direction: 'asc' | 'desc',
+  ) {
+    // ambos nulos → iguales
+    if (a == null && b == null) return 0;
+
+    // solo a es nulo → va al final
+    if (a == null) return 1;
+
+    // solo b es nulo → va al final
+    if (b == null) return -1;
+
+    // ambos números válidos
+    return direction === 'asc' ? a - b : b - a;
+  }
 
   toggleSort(field: SortField) {
     if (this.sortField() === field) {
