@@ -4,19 +4,12 @@ import { TransportDataService } from '../../core/services/transport-data.service
 import { TransportRecord } from '../../core/models/transport-record.model';
 import { ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-
-type SortField = 'line' | 'passengers' | 'time' | 'delta' | 'deltaPercent';
-type SortDirection = 'asc' | 'desc';
-
-type TransportRowWithDelta = TransportRecord & {
-  deltaPassengers: number | null;
-  deltaPercent: number | null;
-};
+import { TransportTable } from './components/transport-table/transport-table';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, BaseChartDirective, TransportTable],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
@@ -25,9 +18,6 @@ export class Dashboard {
   isLoading = signal(true);
 
   selectedDate = signal<string | null>(null);
-
-  sortField = signal<SortField>('line');
-  sortDirection = signal<SortDirection>('asc');
 
   selectedLine = signal<string>('Line A');
 
@@ -49,36 +39,16 @@ export class Dashboard {
     });
   }
 
-  sortedData = computed(() => {
-    const field = this.sortField();
-    const direction = this.sortDirection();
-
-    return [...this.filteredData()].sort((a, b) => {
-      if (field === 'line') {
-        return direction === 'asc' ? a.line.localeCompare(b.line) : b.line.localeCompare(a.line);
-      } else if (field === 'passengers') {
-        return direction === 'asc' ? a.passengers - b.passengers : b.passengers - a.passengers;
-        /*       } else if (field === 'delta') {
-        return direction === 'asc' ? a.deltaPassengers - b.deltaPassengers : b.deltaPassengers - a.deltaPassengers;
-      } else if (field === 'deltaPercent') {
-        return direction === 'asc' ? a.deltaPercent - b.deltaPercent : b.deltaPercent - a.deltaPercent; */
-      } else {
-        return direction === 'asc'
-          ? a.avgIntervalMinutes - b.avgIntervalMinutes
-          : b.avgIntervalMinutes - a.avgIntervalMinutes;
-      }
-    });
-  });
 
   availableDates = computed(() => [...new Set(this.records().map((d) => d.date))]);
 
   filteredData = computed(() =>
     this.selectedDate()
-      ? this.tableDataWithDelta().filter((d) => d.date === this.selectedDate())
+      ? this.tableData().filter((d) => d.date === this.selectedDate())
       : [],
   );
 
-  tableDataWithDelta = computed<TransportRowWithDelta[]>(() => {
+  tableData = computed<TransportRecord[]>(() => {
     const data = [...this.records()];
     data.sort((a, b) => {
       if (a.line !== b.line) {
@@ -87,7 +57,7 @@ export class Dashboard {
       return a.date.localeCompare(b.date);
     });
 
-    const result: TransportRowWithDelta[] = [];
+    const result: TransportRecord[] = [];
 
     for (let i = 0; i < data.length; i++) {
       const current = data[i];
@@ -123,15 +93,6 @@ export class Dashboard {
   lines = computed(() => Array.from(new Set(this.records().map((d) => d.line))));
 
   totalPassengers = computed(() => this.records().reduce((sum, line) => sum + line.passengers, 0));
-
-  toggleSort(field: SortField) {
-    if (this.sortField() === field) {
-      this.sortDirection.set(this.sortDirection() === 'asc' ? 'desc' : 'asc');
-    } else {
-      this.sortField.set(field);
-      this.sortDirection.set('asc');
-    }
-  }
 
   averageInterval = computed(() => {
     const data = this.filteredData();
@@ -175,7 +136,7 @@ export class Dashboard {
           callback: (value: any, index: number) => {
             const labels = this.lineChartData().labels as string[];
             const date = labels[index];
-            return date.slice(5); // MM-DD
+            return date.slice(5);
           },
         },
       },

@@ -5,4 +5,6 @@ export interface TransportRecord {
   expectedPassengers: number;
   dayType: string;
   avgIntervalMinutes: number;
+  deltaPassengers: number | null;
+  deltaPercent: number | null;
 }
