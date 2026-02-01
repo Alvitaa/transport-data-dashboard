@@ -2,9 +2,9 @@
   { "date": "2026-01-01", "line": "Line A", "passengers": 118430, "expectedPassengers": 110000,"dayType": "weekday","avgIntervalMinutes": 4.3 },
   { "date": "2026-01-02", "line": "Line A", "passengers": 129020, "expectedPassengers": 130000,"dayType": "weekend","avgIntervalMinutes": 4.1 },
   { "date": "2026-01-03", "line": "Line A", "passengers": 138001, "expectedPassengers": 130000,"dayType": "weekend","avgIntervalMinutes": 4 },
-  { "date": "2026-01-04", "line": "Line A", "passengers": 124120, "expectedPassengers": 130000,"dayType": "weekend","avgIntervalMinutes": 3.7 },
-  { "date": "2026-01-05", "line": "Line A", "passengers": 132067, "expectedPassengers": 110000,"dayType": "weekday","avgIntervalMinutes": 4 },
-  { "date": "2026-01-06", "line": "Line A", "passengers": 107790, "expectedPassengers": 110000,"dayType": "weekday","avgIntervalMinutes": 3.9 },
+  { "date": "2026-01-04", "line": "Line A", "passengers": 132120, "expectedPassengers": 130000,"dayType": "weekend","avgIntervalMinutes": 3.7 },
+  { "date": "2026-01-05", "line": "Line A", "passengers": 129067, "expectedPassengers": 110000,"dayType": "weekday","avgIntervalMinutes": 4 },
+  { "date": "2026-01-06", "line": "Line A", "passengers": 111790, "expectedPassengers": 110000,"dayType": "weekday","avgIntervalMinutes": 3.9 },
   { "date": "2026-01-07", "line": "Line A", "passengers": 112910, "expectedPassengers": 110000,"dayType": "weekday","avgIntervalMinutes": 3.9 },
 
   { "date": "2026-01-01", "line": "Line B", "passengers": 132500, "expectedPassengers": 100000,"dayType": "weekday","avgIntervalMinutes": 4.5 },
@@ -19,15 +19,15 @@
   { "date": "2026-01-02", "line": "Line C", "passengers": 97050, "expectedPassengers": 100000,"dayType": "weekend","avgIntervalMinutes": 4.6 },
   { "date": "2026-01-03", "line": "Line C", "passengers": 84902, "expectedPassengers": 100000,"dayType": "weekend","avgIntervalMinutes": 4.7 },
   { "date": "2026-01-04", "line": "Line C", "passengers": 89514, "expectedPassengers": 95000,"dayType": "weekend","avgIntervalMinutes": 4.9 },
-  { "date": "2026-01-05", "line": "Line C", "passengers": 83990, "expectedPassengers": 90000,"dayType": "weekday","avgIntervalMinutes": 4.5 },
-  { "date": "2026-01-06", "line": "Line C", "passengers": 89460, "expectedPassengers": 90000,"dayType": "weekday","avgIntervalMinutes": 4.8 },
-  { "date": "2026-01-07", "line": "Line C", "passengers": 85320, "expectedPassengers": 90000,"dayType": "weekday","avgIntervalMinutes": 4.3 },
+  { "date": "2026-01-05", "line": "Line C", "passengers": 87990, "expectedPassengers": 90000,"dayType": "weekday","avgIntervalMinutes": 4.5 },
+  { "date": "2026-01-06", "line": "Line C", "passengers": 85460, "expectedPassengers": 90000,"dayType": "weekday","avgIntervalMinutes": 4.8 },
+  { "date": "2026-01-07", "line": "Line C", "passengers": 81320, "expectedPassengers": 90000,"dayType": "weekday","avgIntervalMinutes": 4.3 },
 
   { "date": "2026-01-01", "line": "Line D", "passengers": 79230, "expectedPassengers": 75000,"dayType": "weekday","avgIntervalMinutes": 5 },
   { "date": "2026-01-02", "line": "Line D", "passengers": 82703, "expectedPassengers": 80000,"dayType": "weekend","avgIntervalMinutes": 5.7 },
   { "date": "2026-01-03", "line": "Line D", "passengers": 89500, "expectedPassengers": 85000,"dayType": "weekend","avgIntervalMinutes": 5.6 },
   { "date": "2026-01-04", "line": "Line D", "passengers": 79100, "expectedPassengers": 80000,"dayType": "weekend","avgIntervalMinutes": 4.8 },
   { "date": "2026-01-05", "line": "Line D", "passengers": 76570, "expectedPassengers": 75000,"dayType": "weekday","avgIntervalMinutes": 5 },
-  { "date": "2026-01-06", "line": "Line D", "passengers": 67431, "expectedPassengers": 70000,"dayType": "weekday","avgIntervalMinutes": 5.2 },
+  { "date": "2026-01-06", "line": "Line D", "passengers": 73431, "expectedPassengers": 70000,"dayType": "weekday","avgIntervalMinutes": 5.2 },
   { "date": "2026-01-07", "line": "Line D", "passengers": 69970, "expectedPassengers": 75000,"dayType": "weekday","avgIntervalMinutes": 4.3 }
 ]

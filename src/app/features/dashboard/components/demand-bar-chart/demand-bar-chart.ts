@@ -1,4 +1,4 @@
-import { Component, computed, Input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { TransportRecord } from '../../../../core/models/transport-record.model';
 import { ChartData } from 'chart.js';
@@ -10,10 +10,10 @@ import { ChartData } from 'chart.js';
   templateUrl: './demand-bar-chart.html',
 })
 export class DemandBarChart {
-  @Input({ required: true }) data!: TransportRecord[];
+  data = input.required<TransportRecord[]>();
 
   barChartData = computed<ChartData<'bar'>>(() => {
-    const data = this.data;
+    const data = this.data();
 
     const filtered = data.sort((a, b) => a.date.localeCompare(b.date));
 
