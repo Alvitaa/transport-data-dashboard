@@ -5,11 +5,12 @@ import { TransportRecord } from '../../core/models/transport-record.model';
 import { TransportTable } from './components/transport-table/transport-table';
 import { PassangersLineChart } from './components/passangers-line-chart/passangers-line-chart';
 import { DemandBarChart } from './components/demand-bar-chart/demand-bar-chart';
+import { Footer } from '../../shared/components/footer/footer';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TransportTable,PassangersLineChart, DemandBarChart],
+  imports: [CommonModule, Footer, TransportTable,PassangersLineChart, DemandBarChart],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
