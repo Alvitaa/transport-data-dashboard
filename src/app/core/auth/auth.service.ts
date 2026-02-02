@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MOCK_USERS } from './mock-users';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -17,11 +18,11 @@ export class AuthService {
   }
 
   login(email: string, password: string): boolean {
-    const foundUser = MOCK_USERS.find(
-      (u) => u.email === email && u.password === password
-    );
-
+    const foundUser = MOCK_USERS.find((u) => u.email === email);
     if (!foundUser) return false;
+
+    const isPassword = bcrypt.compareSync(password, foundUser.password);
+    if (!isPassword) return false;
 
     const userData = { email: foundUser.email, name: foundUser.name };
     this._user.set(userData);
