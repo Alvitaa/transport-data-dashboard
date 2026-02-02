@@ -13,6 +13,9 @@ import { Footer } from '../../shared/components/footer/footer';
   imports: [CommonModule, Footer, TransportTable,PassangersLineChart, DemandBarChart],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
+  host: {
+    class: 'w-full min-h-full flex flex-1 flex-col',
+  },
 })
 export class Dashboard {
   records = signal<TransportRecord[]>([]);

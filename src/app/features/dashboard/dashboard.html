@@ -2,14 +2,13 @@
   @if (isLoading()) {
     <p class="text-gray-500">Loading data...</p>
   } @else {
-    <!-- KPI -->
     <div class="flex flex-row place-content-between">
       <div
         class="flex gap-4 items-center bg-white rounded-xl shadow-md border-1 border-gray-100 px-6 w-1/4"
       >
         <label class="text-lg font-medium">Selected Date:</label>
         <select
-          class="border rounded px-3 py-2 text-sm flex grow"
+          class="border rounded px-3 py-2 text-sm flex grow bg-gray-50"
           (change)="selectedDate.set($any($event.target).value)"
         >
           @for (date of availableDates(); track date) {

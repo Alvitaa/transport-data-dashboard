@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { Dashboard } from './features/dashboard/dashboard';
 import { RouterOutlet } from '@angular/router';
+import { Header } from './shared/components/header/header';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header],
   templateUrl: './app.html'
 })
 export class App {
