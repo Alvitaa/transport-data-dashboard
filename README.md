@@ -8,9 +8,11 @@ Through this project, I showcase my ability to design clean and maintainable cod
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.1. Also uses [Tailwind](https://tailwindcss.com) version 4.1.12.
 
-## Used Dependencies
+## Dependencies
 
 - Chart JS: Used to show relevant graphics about the mocked data. For example, I used a Line Chart to show and compare all the passangers transported in a day by line. I also used a Grouped Bar chart to compare Expected vs Actual Demand by Line per day.
+- ng2-charts: Allows the use of Chart JS in Angular enviroment.
+- Rxjs: idk para que es esto xd
 - Bcrypt: Used to simulate encryption of Login information that in a real life scenario would get sent to a backend server to manage login logic.
 
 ## Development server
