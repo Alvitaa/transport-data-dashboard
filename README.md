@@ -4,7 +4,7 @@ While this project currently uses mocked data, it is designed with real-world sc
 
 The main focus of this project is not the data source itself, but the architecture, structure, and implementation of a scalable Angular application. This project aims to demonstrate my experience building data-driven frontend applications using Angular, including state management, data transformation, reactive programming, and modular architecture.
 
-Through this project, I showcase my ability to design clean and maintainable codebases, handle complex data flows, and present meaningful insights through an interactive and user-focused dashboard, following modern Angular best practices.
+Through this project, I showcase my ability to design clean and maintainable codebases, handle complex data flows, and present meaningful insights through an interactive, responsive and user-focused dashboard, following modern Angular best practices.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.1. Also uses [Tailwind](https://tailwindcss.com) version 4.1.12.
 
