@@ -10,10 +10,10 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Dependencies
 
-- Chart JS: Used to show relevant graphics about the mocked data. For example, I used a Line Chart to show and compare all the passangers transported in a day by line. I also used a Grouped Bar chart to compare Expected vs Actual Demand by Line per day.
-- ng2-charts: Allows the use of Chart JS in Angular enviroment.
-- Rxjs: idk para que es esto xd
-- Bcrypt: Used to simulate encryption of Login information that in a real life scenario would get sent to a backend server to manage login logic.
+- **Chart.js**: Used to visualize insights from the mocked transport data. A Line Chart is used to display passanger volume over time per Line, while a Groped Bar Chart is used to compare Expected vs Actual Demand by line on a given day.
+- **ng2-charts**: Angular wrapper for Chart.js, allowing integration of chart components within the Angular enviroment.
+- **RxJS**: Used internally by Angular for handling asynchronous operations and reactive data flows. In this case its used for the mocked data handling.
+- **bcryptjs**: Used to simulate password hashing in the mocked authentication logic. This avoids storing credentials in plain text and reflects real-world authentication practices, where password verification would occur on a backend service.
 
 ## Development server
 
