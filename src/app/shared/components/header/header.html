@@ -1,9 +1,9 @@
-<div class="flex flex-row items-center bg-green-400 p-6 place-content-between">
-  <h1 class="text-4xl font-black">URBAN TRANSPORT DASHBOARD</h1>
+<div class="flex flex-col items-end p-6 pt-12 bg-green-400 place-content-between gap-6 md:p-6 md:flex-row">
+  <h1 class="text-3xl md:text-4xl font-black">URBAN TRANSPORT DASHBOARD</h1>
   <button
     *ngIf="showLogout"
     (click)="logout()"
-    class="text-white bg-red-600 font-semibold px-6 py-2 rounded-xl hover:bg-red-700"
+    class="text-white bg-red-600 font-semibold px-6 py-2 rounded-xl hover:bg-red-700 text-sm md:text-normal"
   >
     Logout
   </button>

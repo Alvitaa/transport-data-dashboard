@@ -80,9 +80,6 @@ export class Dashboard {
         deltaPercent,
       });
     }
-
-    console.log(result);
-
     return result;
   });
 

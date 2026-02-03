@@ -12,6 +12,8 @@ import { TransportRecord } from '../../../../core/models/transport-record.model'
 export class PassangersLineChart {
   @Input({ required: true }) data!: TransportRecord[];
 
+  isMobile = window.innerWidth < 640;
+
   lineChartData = computed<ChartData<'line'>>(() => {
     const data = this.data;
     if (!data.length) return { labels: [], datasets: [] };
@@ -38,6 +40,7 @@ export class PassangersLineChart {
 
   lineChartOptions = {
     responsive: true,
+    maintainAspectRatio: !this.isMobile,
     scales: {
       x: {
         ticks: {

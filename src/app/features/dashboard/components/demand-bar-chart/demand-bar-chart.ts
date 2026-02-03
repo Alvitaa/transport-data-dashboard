@@ -12,6 +12,8 @@ import { ChartData } from 'chart.js';
 export class DemandBarChart {
   data = input.required<TransportRecord[]>();
 
+  isMobile = window.innerWidth < 640;
+
   barChartData = computed<ChartData<'bar'>>(() => {
     const data = this.data();
 
@@ -34,6 +36,7 @@ export class DemandBarChart {
 
   barChartOptions = {
     responsive: true,
+    maintainAspectRatio: !this.isMobile,
     scales: {
       x: {
         stacked: false,
