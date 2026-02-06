@@ -8,6 +8,10 @@ Through this project, I showcase my ability to design clean and maintainable cod
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.1. Also uses [Tailwind](https://tailwindcss.com) version 4.1.12.
 
+## Live Demo
+
+This demo is available from this [Link](https://alvitaa.github.io/transport-data-dashboard/).
+
 ## Dependencies
 
 - **Chart.js**: Used to visualize insights from the mocked transport data. A Line Chart is used to display passanger volume over time per Line, while a Groped Bar Chart is used to compare Expected vs Actual Demand by line on a given day.
