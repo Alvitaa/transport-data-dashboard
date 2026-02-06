@@ -10,7 +10,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Live Demo
 
-This demo is available from this [Link](https://alvitaa.github.io/transport-data-dashboard/).
+This demo is available from this [Link](https://alvitaa.github.io/transport-data-dashboard/). This website uses github pages.
 
 ## Dependencies
 
